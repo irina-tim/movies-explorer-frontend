@@ -5,6 +5,12 @@
     color: white;
 }
 
+.about-project__group {
+    max-width: 1140px;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
 .about-project__header {
     border-bottom: 1px solid rgba(84, 84, 84, 0.7);
     font: 400 22px/27px "Inter", Arial, sans-serif;
@@ -13,12 +19,6 @@
     width: 100%;
     padding-bottom: 23px;
     margin-bottom: 70px;
-}
-
-.about-project__group {
-    max-width: 1140px;
-    justify-content: space-between;
-    margin: 0 auto;
 }
 
 .about-project__title {
