@@ -1,7 +1,7 @@
 .portfolio {
     width: 100%;
     background-color: #202020;
-    padding: 110px 0 100px;
+    padding: 15px 0 75px;
     color: white;
 }
 
@@ -21,8 +21,8 @@
     display: inline-block;
     background: url("../../../images/portfolio-link-arrow.svg") no-repeat;
     background-size: cover;
-    width: 20px;
-    height: 20px;
+    width: 17px;
+    height: 17px;
 }
 
 .portfolio__links {
@@ -43,4 +43,29 @@
     border-bottom: 1px solid #424242;
     padding-bottom: 19px;
     margin-bottom: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.portfolio__link:hover {
+    opacity: 0.7;
+}
+
+@media screen and (max-width: 1250px) {
+    .portfolio__group {
+        width: 87%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .portfolio {
+        padding: 47px 0 39px;
+    }
+
+    .portfolio__link {
+        font-size: 28px;
+    }
+
+    .portfolio__link-arrow {
+        margin: 5px 6px 0 0;
+    }
 }

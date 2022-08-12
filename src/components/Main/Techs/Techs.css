@@ -21,7 +21,7 @@
     margin: 0;
     width: 100%;
     padding-bottom: 23px;
-    margin-bottom: 70px;
+    margin-bottom: 90px;
 }
 
 .techs__title {
@@ -57,4 +57,40 @@
     border-radius: 10px;
     letter-spacing: -0.04em;
     font: 400 14px/17px "Inter", Arial, sans-serif;
+}
+
+@media screen and (max-width: 1250px) {
+    .techs__group {
+        width: 87%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .techs {
+        padding: 90px 0 98px;
+    }
+
+    .techs__header {
+        margin-bottom: 80px;
+    }
+
+    .techs__subtitle {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .techs__list-item {
+        font-size: 12px;
+        line-height: 15px;
+        width: 84px;
+        height: 57px;
+    }
+
+    .techs__title {
+        margin-bottom: 22px;
+    }
+
+    .techs__subtitle {
+        margin-bottom: 83px;
+    }
 }

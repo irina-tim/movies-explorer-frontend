@@ -31,6 +31,12 @@
     border: none;
     cursor: pointer;
     padding: 0;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+}
+
+.header__button:hover {
+    opacity: 0.8;
 }
 
 .header__button_active {
@@ -38,4 +44,10 @@
     color: black;
     padding: 8px 20px;
     border-radius: 3px;
+}
+
+@media screen and (max-width: 1250px) {
+    .header__group {
+        width: 92%;
+    }
 }
