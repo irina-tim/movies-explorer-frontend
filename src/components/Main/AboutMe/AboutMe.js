@@ -12,7 +12,7 @@ function AboutMe() {
             <p className="about-me__subtitle">Фронтенд-разработчик, 31 год</p>
             <p className="about-me__caption">Живу в Санкт-Петербурге. Замужем, есть двое детей. 
                 Я люблю фотографировать детей и природу, делать разные вещи своими руками. 
-                Работала в сфере IT, но в качестве релиз-инженера. Теперь я чебурашка.</p>
+                Работала в сфере IT, но в качестве релиз-инженера. Становлюсь фронтенд-разработчиком.</p>
             <ul className="about-me__links">
               <li>
                  <a className="about-me__link" href="https://www.instagram.com/irene.timoshenko/">Instagram</a>

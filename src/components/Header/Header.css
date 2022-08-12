@@ -50,4 +50,15 @@
     .header__group {
         width: 92%;
     }
+
+    .header__button {
+        font-size: 10px;
+    }
+
+    .header__button_active {
+        box-sizing: content-box;
+        padding: 5px 12px 9px;
+        height: 12px;
+        margin: 6px 1px 0 -15px;
+    }
 }

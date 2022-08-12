@@ -101,3 +101,29 @@
         margin: 0;
     }
 }
+
+@media screen and (max-width: 500px) {
+    .promo {
+        padding: 70px 0 30px;
+    }
+
+    .promo__group {
+        width: 100%;
+        gap: 44px;
+    }
+
+    .promo__logo {
+        width: 210px;
+        height: 206px;
+    }
+
+    .promo__title {
+        font-size: 30px;
+        line-height: 38px;
+        letter-spacing: -0.04em;
+    }
+
+    .promo__learn-more-link {
+        margin-top: 80px;
+    }
+}

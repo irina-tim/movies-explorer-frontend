@@ -69,3 +69,39 @@
         margin: 5px 6px 0 0;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .portfolio__header {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .portfolio__link {
+        font-size: 18px;
+        line-height: 28px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .portfolio {
+        padding: 70px 0 27px;
+    }
+
+    .portfolio__group {
+        width: 89%;
+    }
+
+    .portfolio__link-arrow {
+        width: 10px;
+        height: 10px;
+        margin: -2px -2px 0 0;
+    }
+
+    .portfolio__link {
+        margin-left: -3px;
+    }
+
+    .portfolio__header {
+        margin-bottom: 41px;
+    }
+}
