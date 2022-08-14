@@ -28,88 +28,41 @@
     height: 38px;
 }
 
-.header__buttons {
-    display: flex;
-    gap: 30px;
-}
-
-.header__button {
-    font: 500 12px/16px "Inter", Arial, sans-serif;
-    color: white;
-    background-color: transparent;
+.header__burger-menu {
+    width: 44px;
+    height: 44px;
     border: none;
+    background-color: transparent;
     cursor: pointer;
-    padding: 0;
-    transition: opacity 0.2s ease;
-    z-index: 10;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 20;
 }
 
-.header__button:hover {
+.header__burger-menu:hover {
     opacity: 0.8;
-}
-
-.header__button_active {
-    background-color: #3DDC84;
-    color: black;
-    padding: 8px 20px;
-    border-radius: 3px;
-}
-
-.header__button-films {
-    font: 500 13px/18px "Inter", Arial, sans-serif;
-    height: 30px;
-    margin-left: -17px;
-}
-
-.header__button-account {
-    font: 500 14px/16px "Inter", Arial, sans-serif;
-}
-
-.header__account-group {
-    display: flex;
-    margin-left: 335px;
-}
-
-.header__account-image {
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
-    margin-left: 13px;
-    background: url("../../images/header-account.svg") no-repeat #313131 center;
-    background-size: 40%;
 }
 
 @media screen and (max-width: 1250px) {
     .header__group {
         width: 92%;
     }
-
-    .header__button {
-        font-size: 10px;
-    }
-
-    .header__button_active {
-        box-sizing: content-box;
-        padding: 5px 12px 9px;
-        height: 12px;
-        margin: 6px 1px 0 -15px;
-    }
-}
-
-@media screen and (max-width: 1200px) {
-    .header__account-group {
-        margin-left: 310px;
-    }
-}
-
-@media screen and (max-width: 1000px) {
-    .header__account-group {
-        margin-left: 280px;
-    }
 }
 
 @media screen and (max-width: 900px) {
-    .header__account-group {
-        margin-left: 0px;
+    .header {
+        padding: 15px 0;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .header {
+        padding: 16px 0;
+    }
+
+    .header__burger-menu {
+        width: 42px;
+        height: 42px;
+        background-size: cover;
     }
 }

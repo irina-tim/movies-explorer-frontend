@@ -1,6 +1,7 @@
 .round-checkbox {
     position: relative;
     display: inline-block;
+    cursor: pointer;
 }
 
 .round-checkbox__default-checkbox {
