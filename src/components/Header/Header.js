@@ -5,11 +5,17 @@ import burgerMenu from "../../images/header-burger-menu.svg";
 import Navigation from "../Navigation/Navigation";
 
 function Header() {
-  const isLoggedIn=true; // Temp variable
+  const isLoggedIn=true;
+  const isRegisterPage = true;
+  const isLoginPage = false;
+  const isAuth = isRegisterPage || isLoginPage;
   const headerClasses = `header ${!isLoggedIn ? 'header_navy-blue' : 'header_dark-grey'}`;
+  const headerGroupClasses = !isAuth ? 'header__group' : 'header__group-auth';
+  const headerLogoClasses = !isAuth ? 'header__logo' : 'header__logo-auth';
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const tabletWidth = 900;
+  const greeting = isRegisterPage ?  'Добро пожаловать!' : 'Рады видеть!';
 
   useEffect(() => {
     function handleResize() {
@@ -25,15 +31,17 @@ function Header() {
 
   return (
     <header className={headerClasses}>
-      <div className="header__group">
-        <div className="header__logo"></div>
-        <Navigation 
-          isLoggedIn={isLoggedIn}
-          width={width}
-          tabletWidth={tabletWidth} 
-          isMenuOpened={isMenuOpened}
-        />
-        {(isLoggedIn && width <= tabletWidth) && 
+      <div className={headerGroupClasses}>
+        <div className={headerLogoClasses}></div>
+        {!isAuth && 
+          (<Navigation 
+            isLoggedIn={isLoggedIn}
+            width={width}
+            tabletWidth={tabletWidth} 
+            isMenuOpened={isMenuOpened}
+          />)
+        }
+        {(isLoggedIn && width <= tabletWidth && !isAuth) && 
           (<button
             className="header__burger-menu"
             onClick={handleBurgerMenuClick}
@@ -52,6 +60,9 @@ function Header() {
                 : '42px',
             }}
           ></button>)     
+        }
+        {isAuth && 
+          (<h2 className="header__auth-greeting">{greeting}</h2>)
         }
       </div>
     </header>

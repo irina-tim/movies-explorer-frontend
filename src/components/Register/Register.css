@@ -1,0 +1,88 @@
+.register {
+    width: 100%;
+    background-color: #202020;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0 70px;
+}
+
+.register__info {
+    display: flex;
+    flex-direction: column;
+}
+
+.register__label {
+    font: 400 10px/12px "Inter", Arial, sans-serif;
+    color: #8B8B8B;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #424242;
+}
+
+.register__label:not(:first-child) {
+    margin-top: 5px;
+}
+
+.register__input {
+    font: 400 14px/17px "Inter", Arial, sans-serif;
+    background-color: transparent;
+    border: none;
+    color: white;
+    margin: 5px 0 0;
+    padding-bottom: 10px;
+}
+
+.register__error {
+    margin: 0;
+    font: 400 10px/12px "Inter", Arial, sans-serif;
+    color: #EE3465;
+    margin-top: 6px;
+}
+
+.register__button-register {
+    margin: 134px 0 16px;
+    width: 396px;
+    height: 45px;
+    background-color: #4285F4;
+    border-radius: 3px;
+    border: none;
+    color: white;
+    font: 500 14px/17px "Inter", Arial, sans-serif;
+    cursor: pointer;
+}
+
+.register__sign-out-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.register__paragraph {
+    margin: 0;
+    font: 400 14px/17px "Inter", Arial, sans-serif;
+    color: #8B8B8B;
+}
+
+.register__button-exit {
+    color: #4285F4;
+    font: 400 14px/17px "Inter", Arial, sans-serif;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.register__button-exit:hover,
+.register__button-register:hover {
+    opacity: .8;
+}
+
+@media screen and (max-width: 600px) {
+    .register__button-register {
+        width: 260px;
+        height: 45px;
+    }
+}
