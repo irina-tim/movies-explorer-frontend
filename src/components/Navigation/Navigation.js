@@ -1,20 +1,29 @@
 import './Navigation.css';
+import { useNavigate } from "react-router-dom";
 
 function Navigation(props) {
     return(
         <>
             {(!props.isLoggedIn && props.width > props.tabletWidth) &&
                 (<div className="navigation__buttons">
-                    <button className="navigation__button">Регистрация</button>
-                    <button className="navigation__button navigation__button_active">Войти</button>
+                    <button className="navigation__button" onClick={() => props.navigateToRegister()}>Регистрация</button>
+                    <button className="navigation__button navigation__button_active" onClick={() => props.navigateToLogin()}>Войти</button>
                 </div>)
             }
             {(props.isLoggedIn && props.width > props.tabletWidth) &&
                 (<div className="navigation__buttons">
-                <button className="navigation__button navigation__button-films navigation__button-films_active">Фильмы</button>
-                <button className="navigation__button navigation__button-films">Сохранённые фильмы</button>
-                <div className="navigation__account-group">
-                    <button className="navigation__button navigation__button-account">Аккаунт</button>
+                <button 
+                    className="navigation__button navigation__button-films navigation__button-films_active"
+                    onClick={() => props.navigateToMovies()}
+                >Фильмы</button>
+                <button 
+                    className="navigation__button navigation__button-films" 
+                    onClick={() => props.navigateToSavedMovies()}
+                >Сохранённые фильмы</button>
+                <div className="navigation__account-group" onClick={() => props.navigateToProfile()}>
+                    <button 
+                        className="navigation__button navigation__button-account"
+                    >Аккаунт</button>
                     <div className="navigation__account-image"></div>
                 </div>
                 </div>)

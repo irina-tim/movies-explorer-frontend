@@ -4,18 +4,15 @@ import closeButton from "../../images/header-menu-close.svg";
 import burgerMenu from "../../images/header-burger-menu.svg";
 import Navigation from "../Navigation/Navigation";
 
-function Header() {
-  const isLoggedIn=true;
-  const isRegisterPage = true;
-  const isLoginPage = false;
-  const isAuth = isRegisterPage || isLoginPage;
-  const headerClasses = `header ${!isLoggedIn ? 'header_navy-blue' : 'header_dark-grey'}`;
+function Header(props) {
+  const isAuth = props.isRegisterPage || props.isLoginPage;
+  const headerClasses = `header ${!props.isLoggedIn ? 'header_navy-blue' : 'header_dark-grey'}`;
   const headerGroupClasses = !isAuth ? 'header__group' : 'header__group-auth';
   const headerLogoClasses = !isAuth ? 'header__logo' : 'header__logo-auth';
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const tabletWidth = 900;
-  const greeting = isRegisterPage ?  'Добро пожаловать!' : 'Рады видеть!';
+  const greeting = props.isRegisterPage ?  'Добро пожаловать!' : 'Рады видеть!';
 
   useEffect(() => {
     function handleResize() {
@@ -32,16 +29,21 @@ function Header() {
   return (
     <header className={headerClasses}>
       <div className={headerGroupClasses}>
-        <div className={headerLogoClasses}></div>
+        <div className={headerLogoClasses} onClick={() => props.navigateToMain()}></div>
         {!isAuth && 
           (<Navigation 
-            isLoggedIn={isLoggedIn}
+            isLoggedIn={props.isLoggedIn}
             width={width}
             tabletWidth={tabletWidth} 
             isMenuOpened={isMenuOpened}
+            navigateToRegister={props.navigateToRegister}
+            navigateToLogin={props.navigateToLogin}
+            navigateToMovies={props.navigateToMovies}
+            navigateToSavedMovies={props.navigateToSavedMovies}
+            navigateToProfile={props.navigateToProfile}
           />)
         }
-        {(isLoggedIn && width <= tabletWidth && !isAuth) && 
+        {(props.isLoggedIn && width <= tabletWidth && !isAuth) && 
           (<button
             className="header__burger-menu"
             onClick={handleBurgerMenuClick}
@@ -62,7 +64,7 @@ function Header() {
           ></button>)     
         }
         {isAuth && 
-          (<h2 className="header__auth-greeting">{greeting}</h2>)
+          (<h2 className={props.isRegisterPage ? "header__auth-greeting" : "header__login-greeting"}>{greeting}</h2>)
         }
       </div>
     </header>
