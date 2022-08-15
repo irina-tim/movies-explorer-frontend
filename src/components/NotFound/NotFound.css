@@ -1,58 +1,57 @@
 .not-found {
-    background-color: #202020;
-    color: white;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+  background-color: #202020;
+  color: white;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
 
 .not-found__group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 100%;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
 }
 
 .not-found__title {
-    font: 400 140px/169px "Inter", Arial, sans-serif;
-    margin: 108px 0 5px;
+  font: 400 140px/169px 'Inter', Arial, sans-serif;
+  margin: 108px 0 5px;
 }
 
 .not-found__caption {
-    font: 400 16px/19px "Inter", Arial, sans-serif;
-    margin: 0 0 184px;
+  font: 400 16px/19px 'Inter', Arial, sans-serif;
+  margin: 0 0 184px;
 }
 
 .not-found__button {
-    background-color: transparent;
-    border: none;
-    font: 400 16px/19px "Inter", Arial, sans-serif;
-    color: #4285F4;
+  background-color: transparent;
+  border: none;
+  font: 400 16px/19px 'Inter', Arial, sans-serif;
+  color: #4285f4;
 }
 
 @media screen and (max-width: 780px) {
-    .not-found__title {
-        margin: 432px 0 5px;
-    }
+  .not-found__title {
+    margin: 432px 0 5px;
+  }
 }
 
 @media screen and (max-width: 500px) {
-    .not-found__title {
-        font: 400 80px/97px "Inter", Arial, sans-serif;
-        margin: 299px 0 9px;
-    }
+  .not-found__title {
+    font: 400 80px/97px 'Inter', Arial, sans-serif;
+    margin: 299px 0 9px;
+  }
 
-    .not-found__caption {
-        font: 400 12px/15px "Inter", Arial, sans-serif;
-        margin: 0 0 285px;
-    }
+  .not-found__caption {
+    font: 400 12px/15px 'Inter', Arial, sans-serif;
+    margin: 0 0 285px;
+  }
 
-    .not-found__button {
-        font: 400 12px/15px "Inter", Arial, sans-serif;
-    }
+  .not-found__button {
+    font: 400 12px/15px 'Inter', Arial, sans-serif;
+  }
 }

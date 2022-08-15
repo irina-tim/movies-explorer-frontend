@@ -1,5 +1,5 @@
-import './Login.css';
-import Auth from "../Auth/Auth";
+import './Login.css'
+import Auth from '../Auth/Auth'
 
 function Login(props) {
   return (
@@ -12,4 +12,4 @@ function Login(props) {
   )
 }
 
-export default Login;
+export default Login

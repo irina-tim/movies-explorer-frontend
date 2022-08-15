@@ -1,43 +1,43 @@
-import './App.css';
-import Main from "../Main/Main";
-import Movies from "../Movies/Movies";
-import SavedMovies from "../SavedMovies/SavedMovies";
-import NotFound from "../NotFound/NotFound";
-import Profile from "../Profile/Profile";
-import Register from "../Register/Register";
-import Login from "../Login/Login";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import './App.css'
+import Main from '../Main/Main'
+import Movies from '../Movies/Movies'
+import SavedMovies from '../SavedMovies/SavedMovies'
+import NotFound from '../NotFound/NotFound'
+import Profile from '../Profile/Profile'
+import Register from '../Register/Register'
+import Login from '../Login/Login'
+import Footer from '../Footer/Footer'
+import Header from '../Header/Header'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 
 function App() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   function navigateToLogin() {
-    navigate("/sign-in");
+    navigate('/sign-in')
   }
   function navigateToRegister() {
-    navigate("/sign-up");
+    navigate('/sign-up')
   }
   function navigateToMovies() {
-    navigate("/movies");
+    navigate('/movies')
   }
   function navigateToSavedMovies() {
-    navigate("/saved-movies");
+    navigate('/saved-movies')
   }
   function navigateToProfile() {
-    navigate("/profile");
+    navigate('/profile')
   }
   function navigateToMain() {
-    navigate("/");
+    navigate('/')
   }
   return (
-    <>      
-      <Routes>        
+    <>
+      <Routes>
         <Route
           index
           element={
             <>
-              <Header 
+              <Header
                 isLoggedIn={false}
                 isRegisterPage={false}
                 isLoginPage={false}
@@ -45,7 +45,7 @@ function App() {
                 navigateToRegister={navigateToRegister}
                 navigateToMain={navigateToMain}
               />
-              <Main /> 
+              <Main />
             </>
           }
         />
@@ -53,15 +53,13 @@ function App() {
           path="/sign-up"
           element={
             <>
-              <Header 
+              <Header
                 isLoggedIn={true}
                 isRegisterPage={true}
                 isLoginPage={false}
                 navigateToMain={navigateToMain}
               />
-              <Register 
-                navigateToLogin={navigateToLogin}
-              />
+              <Register navigateToLogin={navigateToLogin} />
             </>
           }
         />
@@ -69,15 +67,13 @@ function App() {
           path="/sign-in"
           element={
             <>
-              <Header 
+              <Header
                 isLoggedIn={true}
                 isRegisterPage={false}
                 isLoginPage={true}
                 navigateToMain={navigateToMain}
               />
-              <Login 
-                navigateToRegister={navigateToRegister}
-              />
+              <Login navigateToRegister={navigateToRegister} />
             </>
           }
         />
@@ -85,7 +81,7 @@ function App() {
           path="/movies"
           element={
             <>
-              <Header 
+              <Header
                 isLoggedIn={true}
                 isRegisterPage={false}
                 isLoginPage={false}
@@ -97,12 +93,12 @@ function App() {
               <Movies />
             </>
           }
-        /> 
+        />
         <Route
           path="/saved-movies"
           element={
             <>
-              <Header 
+              <Header
                 isLoggedIn={true}
                 isRegisterPage={false}
                 isLoginPage={false}
@@ -119,7 +115,7 @@ function App() {
           path="/profile"
           element={
             <>
-              <Header 
+              <Header
                 isLoggedIn={true}
                 isRegisterPage={false}
                 isLoginPage={false}
@@ -131,15 +127,12 @@ function App() {
               <Profile />
             </>
           }
-        /> 
-        <Route
-          path="/404"
-          element={<NotFound />}
         />
+        <Route path="/404" element={<NotFound />} />
       </Routes>
       <Footer />
     </>
-  );
+  )
 }
 
-export default App;
+export default App

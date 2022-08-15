@@ -1,9 +1,11 @@
-import './Footer.css';
+import './Footer.css'
 
 function Footer() {
   return (
     <footer className="footer">
-      <p className="footer__caption">Учебный проект Яндекс.Практикум х BeatFilm.</p>
+      <p className="footer__caption">
+        Учебный проект Яндекс.Практикум х BeatFilm.
+      </p>
       <div className="footer__group">
         <p className="footer__copyright">© {new Date().getFullYear()}</p>
         <nav>
@@ -19,16 +21,18 @@ function Footer() {
               </a>
             </li>
             <li>
-              <a className="footer__link" href="https://www.instagram.com/irene.timoshenko/">
+              <a
+                className="footer__link"
+                href="https://www.instagram.com/irene.timoshenko/"
+              >
                 Instagram
               </a>
             </li>
           </ul>
         </nav>
-
       </div>
     </footer>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

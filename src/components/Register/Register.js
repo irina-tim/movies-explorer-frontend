@@ -1,5 +1,5 @@
-import './Register.css';
-import Auth from "../Auth/Auth";
+import './Register.css'
+import Auth from '../Auth/Auth'
 
 function Register(props) {
   return (
@@ -13,4 +13,4 @@ function Register(props) {
   )
 }
 
-export default Register;
+export default Register
