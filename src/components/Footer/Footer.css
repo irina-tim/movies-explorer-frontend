@@ -3,6 +3,7 @@
   background-color: #202020;
   padding: 90px 0 10px;
   color: white;
+  flex-shrink: 0;
 }
 
 .footer__caption {

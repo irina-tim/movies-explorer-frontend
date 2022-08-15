@@ -1,5 +1,4 @@
 import './Navigation.css'
-import { useNavigate } from 'react-router-dom'
 
 function Navigation(props) {
   return (
@@ -51,15 +50,29 @@ function Navigation(props) {
           <div className="navigation__page-blackout">
             <div className="navigation__buttons-group">
               <div className="navigation__nav-buttons-group">
-                <button className="navigation__button-right">Главная</button>
-                <button className="navigation__button-right navigation__button-right_active">
+                <button
+                  className="navigation__button-right"
+                  onClick={() => props.navigateToMain()}
+                >
+                  Главная
+                </button>
+                <button
+                  className="navigation__button-right navigation__button-right_active"
+                  onClick={() => props.navigateToMovies()}
+                >
                   Фильмы
                 </button>
-                <button className="navigation__button-right">
+                <button
+                  className="navigation__button-right"
+                  onClick={() => props.navigateToSavedMovies()}
+                >
                   Сохранённые фильмы
                 </button>
               </div>
-              <div className="navigation__account-group-right">
+              <div
+                className="navigation__account-group-right"
+                onClick={() => props.navigateToProfile()}
+              >
                 <button className="navigation__button-right navigation__button-account-right">
                   Аккаунт
                 </button>

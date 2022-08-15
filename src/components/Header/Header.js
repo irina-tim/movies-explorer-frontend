@@ -46,6 +46,7 @@ function Header(props) {
             navigateToMovies={props.navigateToMovies}
             navigateToSavedMovies={props.navigateToSavedMovies}
             navigateToProfile={props.navigateToProfile}
+            navigateToMain={props.navigateToMain}
           />
         )}
         {props.isLoggedIn && width <= tabletWidth && !isAuth && (
