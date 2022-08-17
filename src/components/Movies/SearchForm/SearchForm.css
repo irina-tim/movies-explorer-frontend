@@ -51,6 +51,14 @@
   width: 90%;
 }
 
+.search-form__input-group:hover {
+  border-color: rgb(187, 187, 187);
+}
+
+.search-form__input-group:focus-within {
+  border-color: rgb(187, 187, 187);
+}
+
 .search-form__checkbox-label {
   font: 400 13px/18px 'Inter', Arial, sans-serif;
   margin-left: 27px;

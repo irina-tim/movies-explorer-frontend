@@ -3,7 +3,9 @@ import './LoadMore.css'
 function LoadMore() {
   return (
     <section className="load-more">
-      <button className="load-more__button">Ещё</button>
+      <button className="load-more__button" type="button">
+        Ещё
+      </button>
     </section>
   )
 }

@@ -21,6 +21,8 @@ function AboutMe() {
                 <a
                   className="about-me__link"
                   href="https://www.instagram.com/irene.timoshenko/"
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   Instagram
                 </a>
@@ -29,6 +31,8 @@ function AboutMe() {
                 <a
                   className="about-me__link"
                   href="https://github.com/irina-tim/"
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   Github
                 </a>

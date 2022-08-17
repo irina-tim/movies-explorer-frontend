@@ -53,6 +53,7 @@ function Header(props) {
           <button
             className="header__burger-menu"
             onClick={handleBurgerMenuClick}
+            type="button"
             style={{
               backgroundImage: isMenuOpened
                 ? `url(${closeButton})`

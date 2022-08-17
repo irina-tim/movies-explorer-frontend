@@ -64,7 +64,11 @@ function Auth(props) {
         </button>
         <div className="auth__sign-out-group">
           <p className="auth__paragraph">{props.paragraphText}</p>
-          <button className="auth__button-small" onClick={handleClick}>
+          <button
+            className="auth__button-small"
+            type="button"
+            onClick={handleClick}
+          >
             {props.smallButtonText}
           </button>
         </div>
