@@ -1,8 +1,8 @@
 import './FilterCheckbox.css'
 import { useState } from 'react'
 
-function FilterCheckbox() {
-  const [checked, setChecked] = useState(true)
+function FilterCheckbox({ onClick }) {
+  const [checked, setChecked] = useState(false)
   return (
     <label className="switch">
       <input
@@ -10,6 +10,7 @@ function FilterCheckbox() {
         type="checkbox"
         checked={checked}
         onChange={() => setChecked(!checked)}
+        onClick={() => onClick(!checked)}
       ></input>
       <span className="switch__custom-slider"></span>
     </label>
