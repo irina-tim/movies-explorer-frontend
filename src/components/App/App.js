@@ -58,7 +58,7 @@ function App() {
       .register(name, email, password)
       .then(() => {
         setIsRegistrationPassed(true)
-        navigate('/sign-in')
+        handleLogin({ email, password })
       })
       .catch((err) => {
         setErrorMessage(err.message);
