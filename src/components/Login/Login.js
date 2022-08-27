@@ -8,6 +8,8 @@ function Login(props) {
       paragraphText="Ещё не зарегистрированы?"
       smallButtonText="Регистрация"
       navigateToRegister={props.navigateToRegister}
+      onSubmit={props.handleLogin}
+      errorMessage={props.errorMessage}
     />
   )
 }

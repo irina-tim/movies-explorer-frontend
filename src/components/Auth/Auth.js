@@ -20,7 +20,7 @@ function Auth(props) {
   const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false)
 
   useEffect(() => {
-    if (isEmailValid && isPasswordValid && isNameValid)
+    if (isEmailValid && isPasswordValid && (isNameValid || !props.isRegister))
       setIsSubmitButtonEnabled(true)
     else setIsSubmitButtonEnabled(false)
   }, [isEmailValid, isPasswordValid, isNameValid])
@@ -32,9 +32,15 @@ function Auth(props) {
   function onSubmit(e) {
     e.preventDefault()
     const { name, email, password } = formParams
-    props.onSubmit({ name, email, password }).catch((err) => {
-      console.log(err.message)
-    })
+    if (props.isRegister) {
+      props.onSubmit({ name, email, password }).catch((err) => {
+        console.log(err.message)
+      })
+    } else {
+      props.onSubmit({ email, password }).catch((err) => {
+        console.log(err.message)
+      })
+    }    
   }
 
   const handleChange = (e) => {

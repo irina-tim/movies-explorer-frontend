@@ -14,6 +14,7 @@ import { useState, useEffect } from 'react'
 import { isShortMovie, calcCardsAmount } from '../../utils/utils'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
 import mainApi from '../../utils/MainApi'
+import { CurrentUserContext } from "../../contexts/CurrentUserContext"
 
 function App() {
   // const [allMovies, setAllMovies] = useState([])
@@ -39,16 +40,17 @@ function App() {
   const [isRegistrationPassed, setIsRegistrationPassed] = useState(false)
   const [userData, setUserData] = useState({})
   const [errorMessage, setErrorMessage] = useState('')
+  const [currentUser, setCurrentUser] = useState({});
 
-  /* useEffect(() => {
+  useEffect(() => {
     tokenCheck()
   }, [])
 
   useEffect(() => {
     if (loggedIn) {
-      navigate('/')
+      navigate('/movies')
     }
-  }, [loggedIn]) */
+  }, [loggedIn])
 
   const handleRegister = ({ name, email, password }) => {
     setErrorMessage('');
@@ -64,7 +66,7 @@ function App() {
       })
   }
 
-  /* const handleLogin = ({ email, password }) => {
+  const handleLogin = ({ email, password }) => {
     return mainApi
       .login(email, password)
       .then((data) => {
@@ -89,13 +91,21 @@ function App() {
           const userData = {
             id: res.data._id,
             email: res.data.email,
+            name: res.data.name,
           }
           setLoggedIn(true)
           setUserData(userData)
         }
       })
     }
-  } */
+  }
+
+  const handleSignOut = () => {
+    localStorage.removeItem("jwt");
+    setLoggedIn(false);
+    setUserData(null);
+    navigate("/sign-in");
+  }
 
   function navigateToLogin() {
     navigate('/sign-in')
@@ -186,7 +196,7 @@ function App() {
     // console.log('FILTERED = ', filtered)
   }, [filter])
   return (
-    <>
+    <CurrentUserContext.Provider value={currentUser}>
       <Routes>
         <Route
           index
@@ -232,7 +242,7 @@ function App() {
                 isLoginPage={true}
                 navigateToMain={navigateToMain}
               />
-              <Login navigateToRegister={navigateToRegister} />
+              <Login navigateToRegister={navigateToRegister} handleLogin={handleLogin} errorMessage={errorMessage} />
             </>
           }
         />
@@ -291,14 +301,14 @@ function App() {
                 navigateToProfile={navigateToProfile}
                 navigateToMain={navigateToMain}
               />
-              <Profile />
+              <Profile handleSignOut={handleSignOut} />
             </>
           }
         />
         <Route path="/404" element={<NotFound />} />
       </Routes>
       <Footer />
-    </>
+    </CurrentUserContext.Provider>
   )
 }
 

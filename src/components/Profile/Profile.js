@@ -1,6 +1,6 @@
 import './Profile.css'
 
-function Profile() {
+function Profile({ handleSignOut }) {
   const isDisabled = true
   const errorMessage = ''
 
@@ -46,6 +46,7 @@ function Profile() {
             <button
               className="profile__button profile__button-sign-out"
               type="button"
+              onClick={handleSignOut}
             >
               Выйти из аккаунта
             </button>
