@@ -44,13 +44,14 @@ function App() {
 
   useEffect(() => {
     tokenCheck()
+    console.log('tokenCheck');
   }, [])
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (loggedIn) {
       navigate('/movies')
     }
-  }, [loggedIn])
+  }, [loggedIn]) */
 
   const handleRegister = ({ name, email, password }) => {
     setErrorMessage('');
@@ -67,6 +68,7 @@ function App() {
   }
 
   const handleLogin = ({ email, password }) => {
+    setErrorMessage('');
     return mainApi
       .login(email, password)
       .then((data) => {
@@ -77,9 +79,11 @@ function App() {
           tokenCheck()
         }
       })
+      .then(() => {
+        navigate('/movies')
+      })
       .catch((err) => {
-        console.log(err)
-        navigate('/')
+        setErrorMessage(err.message);
       })
   }
 
@@ -97,6 +101,13 @@ function App() {
           setUserData(userData)
         }
       })
+      .catch((err) => {
+        setErrorMessage('При авторизации произошла ошибка. Переданный токен некорректен.')
+        handleSignOut()
+      })
+    } else {
+      setErrorMessage('При авторизации произошла ошибка. Токен не передан или передан не в том формате')
+      handleSignOut()
     }
   }
 
@@ -108,10 +119,12 @@ function App() {
   }
 
   function navigateToLogin() {
+    setErrorMessage('');
     navigate('/sign-in')
   }
 
   function navigateToRegister() {
+    setErrorMessage('');
     navigate('/sign-up')
   }
 
