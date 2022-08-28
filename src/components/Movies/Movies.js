@@ -6,6 +6,8 @@ import LoadMore from './LoadMore/LoadMore'
 import { useState, useEffect } from 'react'
 
 function Movies(props) {
+  console.log('props.filteredMovies = ', props.filteredMovies)
+  console.log('props.savedMovies = ', props.savedMovies)
   const [errorTextValue, setErrorTextValue] = useState(null)
   useEffect(() => {
     // console.log('errorTextValue = ', errorTextValue)
@@ -27,7 +29,14 @@ function Movies(props) {
       />
       {props.isLoading && <Preloader />}
       <div className="movies__error-text">{errorTextValue}</div>
-      {errorTextValue === '' && <MoviesCardList cards={props.filteredMovies} />}
+      {errorTextValue === '' && (
+        <MoviesCardList
+          cards={props.filteredMovies}
+          saveMovie={props.saveMovie}
+          deleteMovie={props.deleteMovie}
+          savedMovies={props.savedMovies}
+        />
+      )}
       <LoadMore loadMore={props.loadMore} />
     </main>
   )

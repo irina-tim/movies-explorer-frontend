@@ -34,6 +34,22 @@
   margin-left: 12px;
 }
 
+.card__delete-btn {
+  background-image: url('../../../images/movie-card-delete.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.card__delete-btn:hover {
+  opacity: 0.8;
+}
+
 @media screen and (max-width: 900px) {
   .movies-card {
     width: 339px;

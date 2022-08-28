@@ -10,7 +10,7 @@ class MainApi {
     if (res.ok) {
       return json
     }
-    return Promise.reject(json)
+    return Promise.reject({ ...json, status: res.status })
   }
 
   register(name, email, password) {
@@ -56,6 +56,47 @@ class MainApi {
       credentials: 'include',
       headers: this._options.headers,
       body: JSON.stringify({ name, email }),
+    }).then(this._checkResponse)
+  }
+
+  saveMovie(movie, userId) {
+    const { country, director, duration, year, description, nameRU, nameEN } =
+      movie
+
+    return fetch(`${this._options.baseUrl}/movies`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this._options.headers,
+      body: JSON.stringify({
+        country,
+        director,
+        duration,
+        year,
+        description,
+        nameRU,
+        nameEN,
+        image: `${MOVIES_API_URL}${movie.image.url}`,
+        trailerLink: movie.trailerLink,
+        thumbnail: `${MOVIES_API_URL}${movie.image.formats.thumbnail.url}`,
+        owner: userId,
+        movieId: movie.id,
+      }),
+    }).then(this._checkResponse)
+  }
+
+  getSavedMovies() {
+    return fetch(`${this._options.baseUrl}/movies`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: this._options.headers,
+    }).then(this._checkResponse)
+  }
+
+  deleteMovie(movieId) {
+    return fetch(`${this._options.baseUrl}/movies/${movieId}`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: this._options.headers,
     }).then(this._checkResponse)
   }
 }

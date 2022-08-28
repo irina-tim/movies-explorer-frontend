@@ -3,20 +3,14 @@ import SearchForm from '../Movies/SearchForm/SearchForm'
 // import Preloader from "../Movies/Preloader/Preloader";
 import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList'
 
-function SavedMovies() {
-  // Temp cards
-  let cards = []
-  for (let i = 0; i < 3; i++) {
-    cards.push({
-      name: '33 слова о дизайне',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-      duration: '1ч42м',
-    })
-  }
+function SavedMovies(props) {
   return (
     <main className="content">
       <SearchForm />
-      <MoviesCardList cards={cards} />
+      <MoviesCardList
+        cards={props.savedMovies}
+        deleteMovie={props.deleteMovie}
+      />
     </main>
   )
 }

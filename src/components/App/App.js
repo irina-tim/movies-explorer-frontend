@@ -17,8 +17,8 @@ import mainApi from '../../utils/MainApi'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
 function App() {
-  // const [allMovies, setAllMovies] = useState([])
-  const [allMovies, setAllMovies] = useLocalStorage('movies', [])
+  const [allMovies, setAllMovies] = useState([])
+  // const [allMovies, setAllMovies] = useLocalStorage('movies', [])
   const [filterLocalStorage, setFilterLocalStorage] = useLocalStorage(
     'filteredMovies',
     {}
@@ -38,12 +38,22 @@ function App() {
   const location = useLocation()
   const [loggedIn, setLoggedIn] = useState(false)
   const [isRegistrationPassed, setIsRegistrationPassed] = useState(false)
-  // const [userData, setUserData] = useState({})
   const [errorMessage, setErrorMessage] = useState('')
+  const [profileErrorMessage, setProfileErrorMessage] = useState('')
   const [currentUser, setCurrentUser] = useState({})
+  const [savedMovies, setSavedMovies] = useState([])
 
   useEffect(() => {
     tokenCheck()
+  }, [])
+
+  useEffect(() => {
+    mainApi
+      .getSavedMovies()
+      .then((data) => {
+        setSavedMovies(data)
+      })
+      .catch((err) => console.log(err))
   }, [])
 
   /* useEffect(() => {
@@ -127,6 +137,7 @@ function App() {
     return mainApi
       .updateProfile(name, email)
       .then((res) => {
+        setProfileErrorMessage('')
         if (res) {
           const userData = {
             id: res.data._id,
@@ -137,7 +148,13 @@ function App() {
         }
       })
       .catch((err) => {
-        setErrorMessage(err.message)
+        if (err.status === 409) {
+          setProfileErrorMessage('Пользователь с таким email уже существует.')
+        } else {
+          setProfileErrorMessage('При обновлении профиля произошла ошибка.')
+        }
+
+        throw err
       })
   }
 
@@ -183,6 +200,12 @@ function App() {
       moviesApi
         .getMovies()
         .then((data) => {
+          data.forEach((movie) => {
+            Object.keys(movie).map(
+              (key) =>
+                (movie[key] === null || undefined) && (movie[key] = 'Нет')
+            )
+          })
           setAllMovies(data)
         })
         .catch((err) => {
@@ -215,6 +238,31 @@ function App() {
   }
   // console.log('cardsInRow (after) = ', cardsInRow)
 
+  function saveMovie(movie) {
+    mainApi
+      .saveMovie(movie, currentUser._id)
+      .then((data) => {
+        setSavedMovies((state) => [...state, data])
+        console.log('savedMovies (after saving) = ', savedMovies)
+      })
+      .catch((err) => console.log(err))
+  }
+
+  function deleteMovie(id) {
+    console.log('savedMovies = ', savedMovies)
+    console.log('id = ', id)
+    const [{ _id }] = savedMovies.filter((el) => Number(el.movieId) === id)
+    mainApi
+      .deleteMovie(_id)
+      .then(() => {
+        setSavedMovies((state) => state.filter((el) => el._id !== _id))
+        setFilter((state) => ({ ...state }))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   useEffect(() => {
     handlerResize()
     window.addEventListener('resize', handlerResize)
@@ -235,6 +283,7 @@ function App() {
     // setHiddenMovies(filtered.splice(0, cardsInRow))
     // console.log('FILTERED = ', filtered)
   }, [filter])
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Routes>
@@ -311,6 +360,9 @@ function App() {
                 errorTextValue={errorTextValue}
                 isFetchError={isFetchError}
                 loadMore={loadMore}
+                saveMovie={saveMovie}
+                deleteMovie={deleteMovie}
+                savedMovies={savedMovies}
               />
             </>
           }
@@ -328,7 +380,10 @@ function App() {
                 navigateToProfile={navigateToProfile}
                 navigateToMain={navigateToMain}
               />
-              <SavedMovies />
+              <SavedMovies
+                savedMovies={savedMovies}
+                deleteMovie={deleteMovie}
+              />
             </>
           }
         />
@@ -348,6 +403,7 @@ function App() {
               <Profile
                 handleSignOut={handleSignOut}
                 handleProfileEdit={updateProfile}
+                errorMessage={profileErrorMessage}
               />
             </>
           }

@@ -86,10 +86,14 @@ function Navigation(props) {
                 <button
                   className="navigation__button-right navigation__button-account-right"
                   type="button"
+                  onClick={() => props.navigateToProfile()}
                 >
                   Аккаунт
                 </button>
-                <div className="navigation__account-image"></div>
+                <div
+                  className="navigation__account-image"
+                  onClick={() => props.navigateToProfile()}
+                ></div>
               </div>
             </div>
           </div>
