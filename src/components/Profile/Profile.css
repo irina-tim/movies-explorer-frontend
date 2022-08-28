@@ -62,6 +62,15 @@
   color: white;
 }
 
+.profile__button_disabled {
+  color: rgb(83, 83, 83);
+  cursor: default;
+}
+
+.profile__button_disabled:hover {
+  opacity: 1;
+}
+
 @media screen and (max-width: 800px) {
   .profile {
     padding: 228px 0 70px;

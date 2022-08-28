@@ -1,27 +1,30 @@
 import './Profile.css'
 import { useState, useEffect, useContext } from 'react'
-import { CurrentUserContext } from "../../contexts/CurrentUserContext"
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
+import { useFormAndValidation } from '../../hooks/useFormAndValidation'
 
 function Profile({ handleSignOut, handleProfileEdit }) {
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext)
   const errorMessage = ''
   const [isEdit, setIsEdit] = useState(false)
-  const [userData, setUserData] = useState({});
-  const isValid = true;
+  // const [userData, setUserData] = useState({})
+  const { values, handleChange, isValid, errors, setValues } =
+    useFormAndValidation()
+
+  useEffect(() => {
+    setValues({ name: currentUser.name, email: currentUser.email })
+  }, [currentUser])
 
   function handleEdit(e) {
-    e.preventDefault();
-    setIsEdit(true);
+    e.preventDefault()
+    setIsEdit(true)
   }
 
   function handleSave(e) {
-    e.preventDefault();
-    setIsEdit(false);
-    handleProfileEdit(userData);
-  }
-
-  const handleChange = (inputData) => {
-    setUserData({ ...userData, ...inputData });
+    e.preventDefault()
+    setIsEdit(false)
+    console.log('values = ', values)
+    handleProfileEdit(values)
   }
 
   return (
@@ -37,7 +40,7 @@ function Profile({ handleSignOut, handleProfileEdit }) {
                 name="name"
                 type="text"
                 className="profile__input"
-                value={isEdit && userData.name || currentUser.name}
+                value={values.name}
                 disabled={!isEdit}
                 required
                 minLength={2}
@@ -54,7 +57,7 @@ function Profile({ handleSignOut, handleProfileEdit }) {
                 name="email"
                 type="email"
                 className="profile__input"
-                value={isEdit && userData.email || currentUser.email}
+                value={values.email}
                 disabled={!isEdit}
                 required
                 placeholder="E-mail"
@@ -65,13 +68,15 @@ function Profile({ handleSignOut, handleProfileEdit }) {
           </div>
           <p className="profile__error">{errorMessage}</p>
           <div className="profile__buttons">
-            <button 
-              className="profile__button"
-              type={isEdit ? "submit" : "button"} 
+            <button
+              className={`profile__button ${
+                isEdit && !isValid && 'profile__button_disabled'
+              }`}
+              type={isEdit ? 'submit' : 'button'}
               onClick={isEdit ? handleSave : handleEdit}
               disabled={isEdit && !isValid}
             >
-              {isEdit ? "Сохранить" : "Редактировать"}
+              {isEdit ? 'Сохранить' : 'Редактировать'}
             </button>
             <button
               className="profile__button profile__button-sign-out"

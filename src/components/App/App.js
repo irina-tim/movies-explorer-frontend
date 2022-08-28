@@ -14,7 +14,7 @@ import { useState, useEffect } from 'react'
 import { isShortMovie, calcCardsAmount } from '../../utils/utils'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
 import mainApi from '../../utils/MainApi'
-import { CurrentUserContext } from "../../contexts/CurrentUserContext"
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
 function App() {
   // const [allMovies, setAllMovies] = useState([])
@@ -40,7 +40,7 @@ function App() {
   const [isRegistrationPassed, setIsRegistrationPassed] = useState(false)
   // const [userData, setUserData] = useState({})
   const [errorMessage, setErrorMessage] = useState('')
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({})
 
   useEffect(() => {
     tokenCheck()
@@ -53,7 +53,7 @@ function App() {
   }, [loggedIn]) */
 
   const handleRegister = ({ name, email, password }) => {
-    setErrorMessage('');
+    setErrorMessage('')
     return mainApi
       .register(name, email, password)
       .then(() => {
@@ -61,13 +61,13 @@ function App() {
         handleLogin({ email, password })
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setErrorMessage(err.message)
         setIsRegistrationPassed(false)
       })
   }
 
   const handleLogin = ({ email, password }) => {
-    setErrorMessage('');
+    setErrorMessage('')
     return mainApi
       .login(email, password)
       .then((data) => {
@@ -82,48 +82,72 @@ function App() {
         navigate('/movies')
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setErrorMessage(err.message)
       })
   }
 
   const tokenCheck = () => {
     if (localStorage.getItem('jwt')) {
       const jwt = localStorage.getItem('jwt')
-      mainApi.checkToken(jwt).then((res) => {
+      mainApi
+        .checkToken(jwt)
+        .then((res) => {
+          if (res) {
+            const userData = {
+              id: res.data._id,
+              email: res.data.email,
+              name: res.data.name,
+            }
+            setLoggedIn(true)
+            setCurrentUser(userData)
+          }
+        })
+        .catch((err) => {
+          setErrorMessage(
+            'При авторизации произошла ошибка. Переданный токен некорректен.'
+          )
+          handleSignOut()
+        })
+    } else {
+      setErrorMessage(
+        'При авторизации произошла ошибка. Токен не передан или передан не в том формате'
+      )
+      handleSignOut()
+    }
+  }
+
+  const handleSignOut = () => {
+    localStorage.removeItem('jwt')
+    setLoggedIn(false)
+    setCurrentUser(null)
+    navigate('/sign-in')
+  }
+
+  const updateProfile = ({ name, email }) => {
+    return mainApi
+      .updateProfile(name, email)
+      .then((res) => {
         if (res) {
           const userData = {
             id: res.data._id,
             email: res.data.email,
             name: res.data.name,
           }
-          setLoggedIn(true)
           setCurrentUser(userData)
         }
       })
       .catch((err) => {
-        setErrorMessage('При авторизации произошла ошибка. Переданный токен некорректен.')
-        handleSignOut()
+        setErrorMessage(err.message)
       })
-    } else {
-      setErrorMessage('При авторизации произошла ошибка. Токен не передан или передан не в том формате')
-      handleSignOut()
-    }
-  }
-
-  const handleSignOut = () => {
-    localStorage.removeItem("jwt");
-    setLoggedIn(false);
-    setCurrentUser(null);
-    navigate("/sign-in");
   }
 
   function navigateToLogin() {
-    setErrorMessage('');
+    setErrorMessage('')
     navigate('/sign-in')
   }
 
   function navigateToRegister() {
-    setErrorMessage('');
+    setErrorMessage('')
     navigate('/sign-up')
   }
 
@@ -143,8 +167,8 @@ function App() {
     navigate('/')
   }
 
-  function handleProfileEdit({name, email}) {
-    setCurrentUser({ name, email })
+  function handleProfileEdit({ name, email }) {
+    // setCurrentUser({ name, email })
   }
 
   function findMovies(searchPhrase, isShort) {
@@ -258,7 +282,11 @@ function App() {
                 isLoginPage={true}
                 navigateToMain={navigateToMain}
               />
-              <Login navigateToRegister={navigateToRegister} handleLogin={handleLogin} errorMessage={errorMessage} />
+              <Login
+                navigateToRegister={navigateToRegister}
+                handleLogin={handleLogin}
+                errorMessage={errorMessage}
+              />
             </>
           }
         />
@@ -317,7 +345,10 @@ function App() {
                 navigateToProfile={navigateToProfile}
                 navigateToMain={navigateToMain}
               />
-              <Profile handleSignOut={handleSignOut} handleProfileEdit={handleProfileEdit}/>
+              <Profile
+                handleSignOut={handleSignOut}
+                handleProfileEdit={updateProfile}
+              />
             </>
           }
         />

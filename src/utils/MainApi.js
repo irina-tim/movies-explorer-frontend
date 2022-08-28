@@ -37,28 +37,37 @@ class MainApi {
 
   checkToken = (token) => {
     return fetch(`${this._options.baseUrl}/users/me`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       credentials: 'include',
-    }).then(this._checkResponse);
+    }).then(this._checkResponse)
   }
 
   updateToken(token) {
-    this._options.headers['Authorization'] = `Bearer ${token}`;
-  }  
+    this._options.headers['Authorization'] = `Bearer ${token}`
+  }
+
+  updateProfile(name, email) {
+    return fetch(`${this._options.baseUrl}/users/me`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: this._options.headers,
+      body: JSON.stringify({ name, email }),
+    }).then(this._checkResponse)
+  }
 }
 
-const token = localStorage.getItem('jwt');
+const token = localStorage.getItem('jwt')
 
 const mainApi = new MainApi({
   baseUrl: MAIN_API_URL,
   headers: {
     Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
-});
+})
 
 export default mainApi
