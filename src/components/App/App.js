@@ -38,13 +38,12 @@ function App() {
   const location = useLocation()
   const [loggedIn, setLoggedIn] = useState(false)
   const [isRegistrationPassed, setIsRegistrationPassed] = useState(false)
-  const [userData, setUserData] = useState({})
+  // const [userData, setUserData] = useState({})
   const [errorMessage, setErrorMessage] = useState('')
   const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
     tokenCheck()
-    console.log('tokenCheck');
   }, [])
 
   /* useEffect(() => {
@@ -98,7 +97,7 @@ function App() {
             name: res.data.name,
           }
           setLoggedIn(true)
-          setUserData(userData)
+          setCurrentUser(userData)
         }
       })
       .catch((err) => {
@@ -114,7 +113,7 @@ function App() {
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
     setLoggedIn(false);
-    setUserData(null);
+    setCurrentUser(null);
     navigate("/sign-in");
   }
 
@@ -142,6 +141,10 @@ function App() {
 
   function navigateToMain() {
     navigate('/')
+  }
+
+  function handleProfileEdit({name, email}) {
+    setCurrentUser({ name, email })
   }
 
   function findMovies(searchPhrase, isShort) {
@@ -314,11 +317,11 @@ function App() {
                 navigateToProfile={navigateToProfile}
                 navigateToMain={navigateToMain}
               />
-              <Profile handleSignOut={handleSignOut} />
+              <Profile handleSignOut={handleSignOut} handleProfileEdit={handleProfileEdit}/>
             </>
           }
         />
-        <Route path="/404" element={<NotFound />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
     </CurrentUserContext.Provider>
