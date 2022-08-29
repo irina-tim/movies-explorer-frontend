@@ -1,6 +1,12 @@
 import './Navigation.css'
+import { useLocation } from 'react-router-dom'
 
 function Navigation(props) {
+  const { pathname } = useLocation()
+  function openProfile() {
+    props.navigateToProfile()
+    props.closeMenu()
+  }
   return (
     <>
       {!props.isLoggedIn && (
@@ -24,23 +30,24 @@ function Navigation(props) {
       {props.isLoggedIn && props.width > props.tabletWidth && (
         <div className="navigation__buttons">
           <button
-            className="navigation__button navigation__button-films navigation__button-films_active"
+            className={`navigation__button navigation__button-films ${
+              pathname === '/movies' && 'navigation__button-films_active'
+            }`}
             onClick={() => props.navigateToMovies()}
             type="button"
           >
             Фильмы
           </button>
           <button
-            className="navigation__button navigation__button-films"
+            className={`navigation__button navigation__button-films ${
+              pathname === '/saved-movies' && 'navigation__button-films_active'
+            }`}
             onClick={() => props.navigateToSavedMovies()}
             type="button"
           >
             Сохранённые фильмы
           </button>
-          <div
-            className="navigation__account-group"
-            onClick={() => props.navigateToProfile()}
-          >
+          <div className="navigation__account-group" onClick={openProfile}>
             <button
               className="navigation__button navigation__button-account"
               type="button"
@@ -58,22 +65,38 @@ function Navigation(props) {
             <div className="navigation__buttons-group">
               <div className="navigation__nav-buttons-group">
                 <button
-                  className="navigation__button-right"
-                  onClick={() => props.navigateToMain()}
+                  className={`navigation__button-right ${
+                    pathname === '/' && 'navigation__button-right_active'
+                  }`}
+                  onClick={() => {
+                    props.navigateToMain()
+                    props.closeMenu()
+                  }}
                   type="button"
                 >
                   Главная
                 </button>
                 <button
-                  className="navigation__button-right navigation__button-right_active"
-                  onClick={() => props.navigateToMovies()}
+                  className={`navigation__button-right ${
+                    pathname === '/movies' && 'navigation__button-right_active'
+                  }`}
+                  onClick={() => {
+                    props.navigateToMovies()
+                    props.closeMenu()
+                  }}
                   type="button"
                 >
                   Фильмы
                 </button>
                 <button
-                  className="navigation__button-right"
-                  onClick={() => props.navigateToSavedMovies()}
+                  className={`navigation__button-right ${
+                    pathname === '/saved-movies' &&
+                    'navigation__button-right_active'
+                  }`}
+                  onClick={() => {
+                    props.navigateToSavedMovies()
+                    props.closeMenu()
+                  }}
                   type="button"
                 >
                   Сохранённые фильмы
@@ -81,18 +104,18 @@ function Navigation(props) {
               </div>
               <div
                 className="navigation__account-group-right"
-                onClick={() => props.navigateToProfile()}
+                onClick={openProfile}
               >
                 <button
                   className="navigation__button-right navigation__button-account-right"
                   type="button"
-                  onClick={() => props.navigateToProfile()}
+                  onClick={openProfile}
                 >
                   Аккаунт
                 </button>
                 <div
                   className="navigation__account-image"
-                  onClick={() => props.navigateToProfile()}
+                  onClick={openProfile}
                 ></div>
               </div>
             </div>

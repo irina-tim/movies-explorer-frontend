@@ -17,6 +17,11 @@ function SearchForm({ findMovies, handleSearchError }) {
   function filterCheckboxClick(value) {
     value ? setIsShort(false) : setIsShort(true)
   }
+  function handleEnterPress(e) {
+    if (e.key === 'Enter') {
+      handleSearchButtonClick(e)
+    }
+  }
   return (
     <section className="search-form">
       <div className="search-form__group">
@@ -28,6 +33,7 @@ function SearchForm({ findMovies, handleSearchError }) {
               setInputValue(e.target.value)
             }}
             required
+            onKeyDown={handleEnterPress}
           ></input>
           <button
             className="search-form__search-button"

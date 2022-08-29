@@ -3,11 +3,15 @@ import { useState, useEffect } from 'react'
 import closeButton from '../../images/header-menu-close.svg'
 import burgerMenu from '../../images/header-burger-menu.svg'
 import Navigation from '../Navigation/Navigation'
+import { useLocation } from 'react-router-dom'
 
 function Header(props) {
+  const { pathname } = useLocation()
   const isAuth = props.isRegisterPage || props.isLoginPage
   const headerClasses = `header ${
-    !props.isLoggedIn ? 'header_navy-blue' : 'header_dark-grey'
+    !props.isLoggedIn || pathname === '/'
+      ? 'header_navy-blue'
+      : 'header_dark-grey'
   }`
   const headerGroupClasses = !isAuth ? 'header__group' : 'header__group-auth'
   const headerLogoClasses = !isAuth ? 'header__logo' : 'header__logo-auth'
@@ -47,6 +51,7 @@ function Header(props) {
             navigateToSavedMovies={props.navigateToSavedMovies}
             navigateToProfile={props.navigateToProfile}
             navigateToMain={props.navigateToMain}
+            closeMenu={handleBurgerMenuClick}
           />
         )}
         {props.isLoggedIn && width <= tabletWidth && !isAuth && (

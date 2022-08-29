@@ -184,9 +184,9 @@ function App() {
     navigate('/')
   }
 
-  function handleProfileEdit({ name, email }) {
-    // setCurrentUser({ name, email })
-  }
+  // function handleProfileEdit({ name, email }) {
+  // setCurrentUser({ name, email })
+  // }
 
   function findMovies(searchPhrase, isShort) {
     searchPhrase = searchPhrase.trim()
@@ -243,7 +243,6 @@ function App() {
       .saveMovie(movie, currentUser._id)
       .then((data) => {
         setSavedMovies((state) => [...state, data])
-        console.log('savedMovies (after saving) = ', savedMovies)
       })
       .catch((err) => console.log(err))
   }
@@ -292,12 +291,15 @@ function App() {
           element={
             <>
               <Header
-                isLoggedIn={false}
+                isLoggedIn={loggedIn}
                 isRegisterPage={false}
                 isLoginPage={false}
                 navigateToLogin={navigateToLogin}
                 navigateToRegister={navigateToRegister}
                 navigateToMain={navigateToMain}
+                navigateToMovies={navigateToMovies}
+                navigateToSavedMovies={navigateToSavedMovies}
+                navigateToProfile={navigateToProfile}
               />
               <Main />
             </>

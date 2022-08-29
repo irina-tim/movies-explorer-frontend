@@ -6,8 +6,6 @@ import LoadMore from './LoadMore/LoadMore'
 import { useState, useEffect } from 'react'
 
 function Movies(props) {
-  console.log('props.filteredMovies = ', props.filteredMovies)
-  console.log('props.savedMovies = ', props.savedMovies)
   const [errorTextValue, setErrorTextValue] = useState(null)
   useEffect(() => {
     // console.log('errorTextValue = ', errorTextValue)
