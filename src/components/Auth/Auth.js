@@ -40,7 +40,7 @@ function Auth(props) {
       props.onSubmit({ email, password }).catch((err) => {
         console.log(err.message)
       })
-    }    
+    }
   }
 
   const handleChange = (e) => {
@@ -63,101 +63,105 @@ function Auth(props) {
     if (e.target.name === 'name') setIsNameValid(checksPassed)
   }
 
-  return (
-    <section className="auth">
-      <form className="auth__container" onSubmit={onSubmit}>
-        <div className="auth__info">
-          {props.isRegister && (
-            <>
-              <label className="auth__label">
-                Имя
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  className="auth__input"
-                  value={name}
-                  required
-                  minLength="2"
-                  placeholder="Имя"
-                  onChange={handleChange}
-                />
-              </label>
-              <p
-                className={`auth__error ${
-                  !isNameValid && name !== '' && 'auth__error_visible'
-                }`}
-              >
-                {nameErrorMessage}
-              </p>
-            </>
-          )}
-          <label className="auth__label">
-            E-mail
-            <input
-              id="email"
-              name="email"
-              type="email"
-              className="auth__input"
-              value={email}
-              required
-              placeholder="E-mail"
-              onChange={handleChange}
-            />
-          </label>
-          <p
-            className={`auth__error ${
-              !isEmailValid && email !== '' && 'auth__error_visible'
-            }`}
-          >
-            {emailErrorMessage}
-          </p>
-          <label className="auth__label">
-            Пароль
-            <input
-              id="password"
-              name="password"
-              type="password"
-              className="auth__input"
-              value={password}
-              required
-              placeholder="Пароль"
-              onChange={handleChange}
-              minLength="5"
-              maxLength="15"
-            />
-          </label>
-          <p
-            className={`auth__error ${
-              !isPasswordValid && password !== '' && 'auth__error_visible'
-            }`}
-          >
-            {passwordErrorMessage}
-          </p>
-        </div>
-        <p className="auth__error-from-api">{props.errorMessage}</p>
-        <button
-          className={`auth__button-auth ${
-            !props.isRegister && 'auth__button-login'
-          } ${!isSubmitButtonEnabled && 'auth__button-auth_disabled'}`}
-          type="submit"
-          disabled={!isSubmitButtonEnabled}
-        >
-          {props.authButtonText}
-        </button>
-        <div className="auth__sign-out-group">
-          <p className="auth__paragraph">{props.paragraphText}</p>
+  if (props.isLoggedIn === true) {
+    props.navigateToMain()
+  } else {
+    return (
+      <section className="auth">
+        <form className="auth__container" onSubmit={onSubmit}>
+          <div className="auth__info">
+            {props.isRegister && (
+              <>
+                <label className="auth__label">
+                  Имя
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    className="auth__input"
+                    value={name}
+                    required
+                    minLength="2"
+                    placeholder="Имя"
+                    onChange={handleChange}
+                  />
+                </label>
+                <p
+                  className={`auth__error ${
+                    !isNameValid && name !== '' && 'auth__error_visible'
+                  }`}
+                >
+                  {nameErrorMessage}
+                </p>
+              </>
+            )}
+            <label className="auth__label">
+              E-mail
+              <input
+                id="email"
+                name="email"
+                type="email"
+                className="auth__input"
+                value={email}
+                required
+                placeholder="E-mail"
+                onChange={handleChange}
+              />
+            </label>
+            <p
+              className={`auth__error ${
+                !isEmailValid && email !== '' && 'auth__error_visible'
+              }`}
+            >
+              {emailErrorMessage}
+            </p>
+            <label className="auth__label">
+              Пароль
+              <input
+                id="password"
+                name="password"
+                type="password"
+                className="auth__input"
+                value={password}
+                required
+                placeholder="Пароль"
+                onChange={handleChange}
+                minLength="5"
+                maxLength="15"
+              />
+            </label>
+            <p
+              className={`auth__error ${
+                !isPasswordValid && password !== '' && 'auth__error_visible'
+              }`}
+            >
+              {passwordErrorMessage}
+            </p>
+          </div>
+          <p className="auth__error-from-api">{props.errorMessage}</p>
           <button
-            className="auth__button-small"
-            type="button"
-            onClick={handleClick}
+            className={`auth__button-auth ${
+              !props.isRegister && 'auth__button-login'
+            } ${!isSubmitButtonEnabled && 'auth__button-auth_disabled'}`}
+            type="submit"
+            disabled={!isSubmitButtonEnabled}
           >
-            {props.smallButtonText}
+            {props.authButtonText}
           </button>
-        </div>
-      </form>
-    </section>
-  )
+          <div className="auth__sign-out-group">
+            <p className="auth__paragraph">{props.paragraphText}</p>
+            <button
+              className="auth__button-small"
+              type="button"
+              onClick={handleClick}
+            >
+              {props.smallButtonText}
+            </button>
+          </div>
+        </form>
+      </section>
+    )
+  }
 }
 
 export default Auth

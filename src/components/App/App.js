@@ -15,14 +15,15 @@ import { isShortMovie, calcCardsAmount } from '../../utils/utils'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
 import mainApi from '../../utils/MainApi'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
+import PrivateRoute from '../PrivateRoute/PrivateRoute'
 
 function App() {
   const [allMovies, setAllMovies] = useState([])
   // const [allMovies, setAllMovies] = useLocalStorage('movies', [])
-  const [filterLocalStorage, setFilterLocalStorage] = useLocalStorage(
+  /* const [filterLocalStorage, setFilterLocalStorage] = useLocalStorage(
     'filteredMovies',
     {}
-  )
+  ) */
   const [isLoading, setIsLoading] = useState(false)
   const [errorTextValue, setErrorTextValue] = useState(null)
   const [isFetchError, setIsFetchError] = useState(false)
@@ -36,7 +37,7 @@ function App() {
   const [filteredMovies, setFilteredMovies] = useState([])
   const navigate = useNavigate()
   const location = useLocation()
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(undefined)
   const [isRegistrationPassed, setIsRegistrationPassed] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [profileErrorMessage, setProfileErrorMessage] = useState('')
@@ -310,13 +311,15 @@ function App() {
           element={
             <>
               <Header
-                isLoggedIn={true}
+                isLoggedIn={loggedIn}
                 isRegisterPage={true}
                 isLoginPage={false}
                 navigateToMain={navigateToMain}
               />
               <Register
+                isLoggedIn={loggedIn}
                 navigateToLogin={navigateToLogin}
+                navigateToMain={navigateToMain}
                 handleRegister={handleRegister}
                 errorMessage={errorMessage}
               />
@@ -328,13 +331,15 @@ function App() {
           element={
             <>
               <Header
-                isLoggedIn={true}
+                isLoggedIn={loggedIn}
                 isRegisterPage={false}
                 isLoginPage={true}
                 navigateToMain={navigateToMain}
               />
               <Login
+                isLoggedIn={loggedIn}
                 navigateToRegister={navigateToRegister}
+                navigateToMain={navigateToMain}
                 handleLogin={handleLogin}
                 errorMessage={errorMessage}
               />
@@ -346,7 +351,7 @@ function App() {
           element={
             <>
               <Header
-                isLoggedIn={true}
+                isLoggedIn={loggedIn}
                 isRegisterPage={false}
                 isLoginPage={false}
                 navigateToMovies={navigateToMovies}
@@ -354,7 +359,9 @@ function App() {
                 navigateToProfile={navigateToProfile}
                 navigateToMain={navigateToMain}
               />
-              <Movies
+              <PrivateRoute
+                loggedIn={loggedIn}
+                component={Movies}
                 allMovies={allMovies}
                 findMovies={findMovies}
                 isLoading={isLoading}
@@ -374,7 +381,7 @@ function App() {
           element={
             <>
               <Header
-                isLoggedIn={true}
+                isLoggedIn={loggedIn}
                 isRegisterPage={false}
                 isLoginPage={false}
                 navigateToMovies={navigateToMovies}
@@ -382,7 +389,9 @@ function App() {
                 navigateToProfile={navigateToProfile}
                 navigateToMain={navigateToMain}
               />
-              <SavedMovies
+              <PrivateRoute
+                loggedIn={loggedIn}
+                component={SavedMovies}
                 savedMovies={savedMovies}
                 deleteMovie={deleteMovie}
               />
@@ -394,7 +403,7 @@ function App() {
           element={
             <>
               <Header
-                isLoggedIn={true}
+                isLoggedIn={loggedIn}
                 isRegisterPage={false}
                 isLoginPage={false}
                 navigateToMovies={navigateToMovies}
@@ -402,7 +411,9 @@ function App() {
                 navigateToProfile={navigateToProfile}
                 navigateToMain={navigateToMain}
               />
-              <Profile
+              <PrivateRoute
+                loggedIn={loggedIn}
+                component={Profile}
                 handleSignOut={handleSignOut}
                 handleProfileEdit={updateProfile}
                 errorMessage={profileErrorMessage}

@@ -4,6 +4,13 @@ import { useLocation } from 'react-router-dom'
 
 function MoviesCard(props) {
   const { pathname } = useLocation()
+  function convertedTime() {
+    const hours = Math.floor(props.card.duration / 60)
+    const minutes = props.card.duration % 60
+    return (
+      (hours !== 0 ? `${hours}ч` : '') + (minutes !== 0 ? `${minutes}м` : '')
+    )
+  }
   return (
     <article className="movies-card">
       <img
@@ -32,7 +39,7 @@ function MoviesCard(props) {
           />
         )}
       </div>
-      <p className="movies-card__duration">{props.card.duration}</p>
+      <p className="movies-card__duration">{convertedTime()}</p>
     </article>
   )
 }
