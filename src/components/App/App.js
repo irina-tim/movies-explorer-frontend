@@ -43,9 +43,14 @@ function App() {
   const [profileErrorMessage, setProfileErrorMessage] = useState('')
   const [currentUser, setCurrentUser] = useState({})
   const [savedMovies, setSavedMovies] = useState([])
+  // const [savedUserSettings, setSavedUserSettings] = useState({})
 
   useEffect(() => {
     tokenCheck()
+    /* setSavedUserSettings({
+      searchString: localStorage.getItem('searchString'),
+      shortMoviesOnly: localStorage.getItem('shortMoviesOnly'),
+    }) */
   }, [])
 
   useEffect(() => {
@@ -191,6 +196,9 @@ function App() {
 
   function findMovies(searchPhrase, isShort) {
     searchPhrase = searchPhrase.trim()
+    console.log('allMovies = ', allMovies)
+    console.log('searchPhrase = ', searchPhrase)
+    console.log('isShort = ', isShort)
     if (allMovies.length > 0) {
       setFilter({
         name: searchPhrase,
@@ -208,6 +216,8 @@ function App() {
             )
           })
           setAllMovies(data)
+          console.log('data = ', data)
+          console.log('allMovies = ', allMovies)
         })
         .catch((err) => {
           setIsFetchError(true)
@@ -272,6 +282,8 @@ function App() {
   }, [])
 
   useEffect(() => {
+    console.log('useEffect filter = ', filter)
+    console.log('useEffect allMovies = ', allMovies)
     const filtered = allMovies.filter((movie) => {
       return (
         movie.nameRU.toLowerCase().includes(filter.name.toLowerCase()) &&
@@ -280,9 +292,12 @@ function App() {
       // (filter.saved ? isSaved(movie.id) : true)
     })
     setFilteredMovies(filtered)
+    setErrorTextValue(
+      filter.name && !filtered.length ? 'Ничего не найдено' : null
+    )
     // setHiddenMovies(filtered.splice(0, cardsInRow))
     // console.log('FILTERED = ', filtered)
-  }, [filter])
+  }, [filter, allMovies])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -367,6 +382,7 @@ function App() {
                 isLoading={isLoading}
                 filteredMovies={filteredMovies}
                 errorTextValue={errorTextValue}
+                setErrorTextValue={setErrorTextValue}
                 isFetchError={isFetchError}
                 loadMore={loadMore}
                 saveMovie={saveMovie}

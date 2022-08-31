@@ -1,10 +1,16 @@
 import './SearchForm.css'
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox'
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useLocalStorage } from '../../../hooks/useLocalStorage'
 
 function SearchForm({ findMovies, handleSearchError }) {
-  const [inputValue, setInputValue] = useState('')
-  const [isShort, setIsShort] = useState(false)
+  const [inputValue, setInputValue] = useLocalStorage('searchString', '')
+  const [isShort, setIsShort] = useLocalStorage('shortMoviesOnly', false)
+
+  useEffect(() => {
+    if (inputValue) findMovies(inputValue, isShort)
+  }, [])
+
   function handleSearchButtonClick(evt) {
     evt.preventDefault()
     if (inputValue === '') {
@@ -15,7 +21,8 @@ function SearchForm({ findMovies, handleSearchError }) {
     }
   }
   function filterCheckboxClick(value) {
-    value ? setIsShort(false) : setIsShort(true)
+    setIsShort(value)
+    // value ? setIsShort(false) : setIsShort(true)
   }
   function handleEnterPress(e) {
     if (e.key === 'Enter') {
@@ -34,6 +41,7 @@ function SearchForm({ findMovies, handleSearchError }) {
             }}
             required
             onKeyDown={handleEnterPress}
+            value={inputValue}
           ></input>
           <button
             className="search-form__search-button"
@@ -44,7 +52,7 @@ function SearchForm({ findMovies, handleSearchError }) {
           </button>
         </div>
         <p className="search-form__checkbox-label">Короткометражки</p>
-        <FilterCheckbox onClick={filterCheckboxClick} />
+        <FilterCheckbox onClick={filterCheckboxClick} checked={isShort} />
       </div>
     </section>
   )
