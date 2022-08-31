@@ -3,6 +3,7 @@ import RoundCheckbox from '../RoundCheckbox/RoundCheckbox'
 import { useLocation } from 'react-router-dom'
 
 function MoviesCard(props) {
+  console.log('props.card = ', props.card)
   const { pathname } = useLocation()
   function convertedTime() {
     const hours = Math.floor(props.card.duration / 60)
@@ -13,15 +14,17 @@ function MoviesCard(props) {
   }
   return (
     <article className="movies-card">
-      <img
-        className="movies-card__image"
-        src={
-          pathname === '/saved-movies'
-            ? props.card.image
-            : 'https://api.nomoreparties.co' + props.card.image.url
-        }
-        alt={props.card.name}
-      />
+      <a target="_blank" rel="noreferrer" href={props.card.trailerLink}>
+        <img
+          className="movies-card__image"
+          src={
+            pathname === '/saved-movies'
+              ? props.card.image
+              : 'https://api.nomoreparties.co' + props.card.image.url
+          }
+          alt={props.card.name}
+        />
+      </a>
       <div className="movies-card__group">
         <h2 className="movies-card__title">{props.card.nameRU}</h2>
         {pathname === '/saved-movies' ? (
