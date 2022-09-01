@@ -13,6 +13,5 @@ export function calcCardsAmount() {
         amount = CARDS_IN_ROW[key]
       }
     })
-  // console.log('amount = ', amount)
   return amount
 }

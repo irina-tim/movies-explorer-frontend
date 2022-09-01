@@ -8,37 +8,26 @@ import Register from '../Register/Register'
 import Login from '../Login/Login'
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
-import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import moviesApi from '../../utils/MoviesApi'
 import { useState, useEffect } from 'react'
-import { isShortMovie, calcCardsAmount } from '../../utils/utils'
-import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { isShortMovie } from '../../utils/utils'
 import mainApi from '../../utils/MainApi'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import PrivateRoute from '../PrivateRoute/PrivateRoute'
 
 function App() {
   const [allMovies, setAllMovies] = useState([])
-  // const [allMovies, setAllMovies] = useLocalStorage('movies', [])
-  /* const [filterLocalStorage, setFilterLocalStorage] = useLocalStorage(
-    'filteredMovies',
-    {}
-  ) */
   const [isLoading, setIsLoading] = useState(false)
   const [errorTextValue, setErrorTextValue] = useState(null)
   const [isFetchError, setIsFetchError] = useState(false)
-  // const [cardsInRow, setCardsInRow] = useState(1)
-  const [hiddenMovies, setHiddenMovies] = useState([])
   const [filter, setFilter] = useState({
     name: '',
     shortFilm: false,
-    // saved: false,
   })
   const [filteredMovies, setFilteredMovies] = useState([])
   const navigate = useNavigate()
-  const location = useLocation()
   const [loggedIn, setLoggedIn] = useState(undefined)
-  const [isRegistrationPassed, setIsRegistrationPassed] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [profileErrorMessage, setProfileErrorMessage] = useState('')
   const [currentUser, setCurrentUser] = useState({})
@@ -48,14 +37,9 @@ function App() {
     searchPhrase: '',
     isShort: false,
   })
-  // const [savedUserSettings, setSavedUserSettings] = useState({})
 
   useEffect(() => {
     tokenCheck()
-    /* setSavedUserSettings({
-      searchString: localStorage.getItem('searchString'),
-      shortMoviesOnly: localStorage.getItem('shortMoviesOnly'),
-    }) */
   }, [])
 
   useEffect(() => {
@@ -70,7 +54,6 @@ function App() {
               (isShort ? isShortMovie(movie.duration) : true)
             )
           })
-    console.log('filtered = ', filtered)
     setFilteredSavedMovies(filtered)
   }, [savedMovies, savedMoviesFilter])
 
@@ -83,23 +66,15 @@ function App() {
       .catch((err) => console.log(err))
   }, [])
 
-  /* useEffect(() => {
-    if (loggedIn) {
-      navigate('/movies')
-    }
-  }, [loggedIn]) */
-
   const handleRegister = ({ name, email, password }) => {
     setErrorMessage('')
     return mainApi
       .register(name, email, password)
       .then(() => {
-        setIsRegistrationPassed(true)
         handleLogin({ email, password })
       })
       .catch((err) => {
         setErrorMessage(err.message)
-        setIsRegistrationPassed(false)
       })
   }
 
@@ -211,10 +186,6 @@ function App() {
     navigate('/')
   }
 
-  // function handleProfileEdit({ name, email }) {
-  // setCurrentUser({ name, email })
-  // }
-
   function findMovies(searchPhrase, isShort) {
     searchPhrase = searchPhrase.trim()
     if (allMovies.length > 0) {
@@ -256,16 +227,6 @@ function App() {
     setSavedMoviesFilter({ searchPhrase, isShort })
   }
 
-  // function loadMore() {
-  //   console.log('filteredMovies = ', filteredMovies)
-  //   console.log('hiddenMovies = ', hiddenMovies)
-  //   console.log('cardsInRow = ', cardsInRow)
-  // }
-
-  // function handlerResize() {
-  //   setCardsInRow(calcCardsAmount())
-  // }
-
   function saveMovie(movie) {
     mainApi
       .saveMovie(movie, currentUser._id)
@@ -290,28 +251,17 @@ function App() {
       })
   }
 
-  // useEffect(() => {
-  //   handlerResize()
-  //   window.addEventListener('resize', handlerResize)
-  //   /* return () => {
-  //     window.removeEventListener('resize', handlerResize)
-  //   } */
-  // }, [])
-
   useEffect(() => {
     const filtered = allMovies.filter((movie) => {
       return (
         movie.nameRU.toLowerCase().includes(filter.name.toLowerCase()) &&
         (filter.isShort ? isShortMovie(movie.duration) : true)
-      ) // &&
-      // (filter.saved ? isSaved(movie.id) : true)
+      )
     })
     setFilteredMovies(filtered)
     setErrorTextValue(
       filter.name && !filtered.length ? 'Ничего не найдено' : null
     )
-    // setHiddenMovies(filtered.splice(0, cardsInRow))
-    // console.log('FILTERED = ', filtered)
   }, [filter, allMovies])
 
   return (
@@ -399,7 +349,6 @@ function App() {
                 errorTextValue={errorTextValue}
                 setErrorTextValue={setErrorTextValue}
                 isFetchError={isFetchError}
-                // loadMore={loadMore}
                 saveMovie={saveMovie}
                 deleteMovie={deleteMovie}
                 savedMovies={savedMovies}

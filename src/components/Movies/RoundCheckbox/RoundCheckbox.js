@@ -1,8 +1,6 @@
 import './RoundCheckbox.css'
-import { useState } from 'react'
 
 function RoundCheckbox(props) {
-  const [checked, setChecked] = useState(false)
   function isSaved(savedMovies, id) {
     return (savedMovies || []).map((el) => Number(el.movieId)).includes(id)
   }
