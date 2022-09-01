@@ -27,7 +27,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [errorTextValue, setErrorTextValue] = useState(null)
   const [isFetchError, setIsFetchError] = useState(false)
-  const [cardsInRow, setCardsInRow] = useState(1)
+  // const [cardsInRow, setCardsInRow] = useState(1)
   const [hiddenMovies, setHiddenMovies] = useState([])
   const [filter, setFilter] = useState({
     name: '',
@@ -43,6 +43,11 @@ function App() {
   const [profileErrorMessage, setProfileErrorMessage] = useState('')
   const [currentUser, setCurrentUser] = useState({})
   const [savedMovies, setSavedMovies] = useState([])
+  const [filteredSavedMovies, setFilteredSavedMovies] = useState([])
+  const [savedMoviesFilter, setSavedMoviesFilter] = useState({
+    searchPhrase: '',
+    isShort: false,
+  })
   // const [savedUserSettings, setSavedUserSettings] = useState({})
 
   useEffect(() => {
@@ -52,6 +57,22 @@ function App() {
       shortMoviesOnly: localStorage.getItem('shortMoviesOnly'),
     }) */
   }, [])
+
+  useEffect(() => {
+    let { searchPhrase, isShort } = savedMoviesFilter
+    searchPhrase = searchPhrase.trim()
+    const filtered =
+      searchPhrase === ''
+        ? savedMovies
+        : savedMovies.filter((movie) => {
+            return (
+              movie.nameRU.toLowerCase().includes(searchPhrase.toLowerCase()) &&
+              (isShort ? isShortMovie(movie.duration) : true)
+            )
+          })
+    console.log('filtered = ', filtered)
+    setFilteredSavedMovies(filtered)
+  }, [savedMovies, savedMoviesFilter])
 
   useEffect(() => {
     mainApi
@@ -136,7 +157,7 @@ function App() {
     localStorage.removeItem('jwt')
     setLoggedIn(false)
     setCurrentUser(null)
-    navigate('/sign-in')
+    navigate('/')
   }
 
   const updateProfile = ({ name, email }) => {
@@ -196,9 +217,6 @@ function App() {
 
   function findMovies(searchPhrase, isShort) {
     searchPhrase = searchPhrase.trim()
-    console.log('allMovies = ', allMovies)
-    console.log('searchPhrase = ', searchPhrase)
-    console.log('isShort = ', isShort)
     if (allMovies.length > 0) {
       setFilter({
         name: searchPhrase,
@@ -216,8 +234,6 @@ function App() {
             )
           })
           setAllMovies(data)
-          console.log('data = ', data)
-          console.log('allMovies = ', allMovies)
         })
         .catch((err) => {
           setIsFetchError(true)
@@ -236,18 +252,19 @@ function App() {
     }
   }
 
-  function loadMore() {
-    console.log('filteredMovies = ', filteredMovies)
-    console.log('hiddenMovies = ', hiddenMovies)
-    console.log('cardsInRow = ', cardsInRow)
+  function findSavedMovies(searchPhrase, isShort) {
+    setSavedMoviesFilter({ searchPhrase, isShort })
   }
 
-  function handlerResize() {
-    setCardsInRow(calcCardsAmount())
-    // console.log('calcCardsAmount() = ', calcCardsAmount())
-    // console.log('----------------')
-  }
-  // console.log('cardsInRow (after) = ', cardsInRow)
+  // function loadMore() {
+  //   console.log('filteredMovies = ', filteredMovies)
+  //   console.log('hiddenMovies = ', hiddenMovies)
+  //   console.log('cardsInRow = ', cardsInRow)
+  // }
+
+  // function handlerResize() {
+  //   setCardsInRow(calcCardsAmount())
+  // }
 
   function saveMovie(movie) {
     mainApi
@@ -273,17 +290,15 @@ function App() {
       })
   }
 
-  useEffect(() => {
-    handlerResize()
-    window.addEventListener('resize', handlerResize)
-    /* return () => {
-      window.removeEventListener('resize', handlerResize)
-    } */
-  }, [])
+  // useEffect(() => {
+  //   handlerResize()
+  //   window.addEventListener('resize', handlerResize)
+  //   /* return () => {
+  //     window.removeEventListener('resize', handlerResize)
+  //   } */
+  // }, [])
 
   useEffect(() => {
-    console.log('useEffect filter = ', filter)
-    console.log('useEffect allMovies = ', allMovies)
     const filtered = allMovies.filter((movie) => {
       return (
         movie.nameRU.toLowerCase().includes(filter.name.toLowerCase()) &&
@@ -384,7 +399,7 @@ function App() {
                 errorTextValue={errorTextValue}
                 setErrorTextValue={setErrorTextValue}
                 isFetchError={isFetchError}
-                loadMore={loadMore}
+                // loadMore={loadMore}
                 saveMovie={saveMovie}
                 deleteMovie={deleteMovie}
                 savedMovies={savedMovies}
@@ -408,8 +423,9 @@ function App() {
               <PrivateRoute
                 loggedIn={loggedIn}
                 component={SavedMovies}
-                savedMovies={savedMovies}
+                savedMovies={filteredSavedMovies}
                 deleteMovie={deleteMovie}
+                findMovies={findSavedMovies}
               />
             </>
           }

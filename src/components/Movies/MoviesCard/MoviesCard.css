@@ -18,6 +18,9 @@
   margin: 0;
   font: 500 13px/16px 'Inter', Arial, sans-serif;
   margin: 14px 0 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .movies-card__group {

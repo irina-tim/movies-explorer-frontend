@@ -2,10 +2,12 @@ import './SearchForm.css'
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox'
 import { useEffect } from 'react'
 import { useLocalStorage } from '../../../hooks/useLocalStorage'
+import { useLocation } from 'react-router-dom'
 
 function SearchForm({ findMovies, handleSearchError }) {
   const [inputValue, setInputValue] = useLocalStorage('searchString', '')
   const [isShort, setIsShort] = useLocalStorage('shortMoviesOnly', false)
+  const { pathname } = useLocation()
 
   useEffect(() => {
     if (inputValue) findMovies(inputValue, isShort)
@@ -13,7 +15,7 @@ function SearchForm({ findMovies, handleSearchError }) {
 
   function handleSearchButtonClick(evt) {
     evt.preventDefault()
-    if (inputValue === '') {
+    if (inputValue === '' && pathname === '/movies') {
       handleSearchError('Нужно ввести ключевое слово')
     } else {
       handleSearchError('')
@@ -22,7 +24,6 @@ function SearchForm({ findMovies, handleSearchError }) {
   }
   function filterCheckboxClick(value) {
     setIsShort(value)
-    // value ? setIsShort(false) : setIsShort(true)
   }
   function handleEnterPress(e) {
     if (e.key === 'Enter') {

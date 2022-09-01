@@ -9,7 +9,9 @@ function Header(props) {
   const { pathname } = useLocation()
   const isAuth = props.isRegisterPage || props.isLoginPage
   const headerClasses = `header ${
-    !props.isLoggedIn || pathname === '/'
+    (!props.isLoggedIn || pathname === '/') &&
+    pathname !== '/sign-in' &&
+    pathname !== '/sign-up'
       ? 'header_navy-blue'
       : 'header_dark-grey'
   }`
