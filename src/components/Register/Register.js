@@ -9,6 +9,10 @@ function Register(props) {
       smallButtonText="Войти"
       isRegister="true"
       navigateToLogin={props.navigateToLogin}
+      navigateToMain={props.navigateToMain}
+      onSubmit={props.handleRegister}
+      errorMessage={props.errorMessage}
+      isLoggedIn={props.isLoggedIn}
     />
   )
 }

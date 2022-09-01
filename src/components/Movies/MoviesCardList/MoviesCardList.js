@@ -6,7 +6,15 @@ function MoviesCardList(props) {
     <section className="movies-card-list">
       <div className="movies-card-list__group">
         {props.cards
-          ? props.cards.map((card, i) => <MoviesCard {...card} key={i} />)
+          ? props.cards.map((card) => (
+              <MoviesCard
+                key={card.id || card._id}
+                saveMovie={props.saveMovie}
+                deleteMovie={props.deleteMovie}
+                savedMovies={props.savedMovies}
+                card={card}
+              />
+            ))
           : null}
       </div>
     </section>

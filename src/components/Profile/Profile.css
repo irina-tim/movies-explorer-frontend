@@ -8,6 +8,10 @@
   padding: 74px 0 70px;
 }
 
+.profile__group {
+  position: relative;
+}
+
 .profile__greeting {
   font: 500 24px/29px 'Inter', Arial, sans-serif;
   text-align: center;
@@ -60,6 +64,25 @@
   font: 400 11px/13px 'Inter', Arial, sans-serif;
   text-align: end;
   color: white;
+}
+
+.profile__button_disabled {
+  color: rgb(83, 83, 83);
+  cursor: default;
+}
+
+.profile__button_disabled:hover {
+  opacity: 1;
+}
+
+.profile__error-from-api {
+  margin: 0;
+  font: 400 10px/12px 'Inter', Arial, sans-serif;
+  color: #ee3465;
+  position: absolute;
+  bottom: 120px;
+  width: 100%;
+  text-align: center;
 }
 
 @media screen and (max-width: 800px) {
