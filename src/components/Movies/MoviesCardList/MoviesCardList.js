@@ -8,7 +8,7 @@ function MoviesCardList(props) {
         {props.cards
           ? props.cards.map((card) => (
               <MoviesCard
-                key={card.id}
+                key={card.id || card._id}
                 saveMovie={props.saveMovie}
                 deleteMovie={props.deleteMovie}
                 savedMovies={props.savedMovies}

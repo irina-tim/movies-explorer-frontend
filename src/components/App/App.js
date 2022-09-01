@@ -237,8 +237,6 @@ function App() {
   }
 
   function deleteMovie(id) {
-    console.log('savedMovies = ', savedMovies)
-    console.log('id = ', id)
     const [{ _id }] = savedMovies.filter((el) => Number(el.movieId) === id)
     mainApi
       .deleteMovie(_id)

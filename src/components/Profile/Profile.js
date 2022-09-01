@@ -21,7 +21,6 @@ function Profile({ handleSignOut, handleProfileEdit, errorMessage }) {
   function handleSave(e) {
     e.preventDefault()
     setIsEdit(false)
-    console.log('values = ', values)
     handleProfileEdit(values).catch(() =>
       setValues({ name: currentUser.name, email: currentUser.email })
     )
