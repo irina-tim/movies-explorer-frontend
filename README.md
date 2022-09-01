@@ -1,4 +1,4 @@
-Pull request: #2
+Pull request: [#2](https://github.com/irina-tim/movies-explorer-frontend/pull/2)
 
 https://tia.nomoredomains.xyz/
 
