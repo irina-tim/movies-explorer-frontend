@@ -1,3 +1,11 @@
+Pull request: #2
+
+https://tia.nomoredomains.xyz/
+
+Public IPv4: 62.84.117.100
+
+Api: api.tia.nomoredomains.xyz
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
