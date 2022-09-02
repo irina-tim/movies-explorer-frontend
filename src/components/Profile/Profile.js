@@ -6,12 +6,18 @@ import { useFormAndValidation } from '../../hooks/useFormAndValidation'
 function Profile({ handleSignOut, handleProfileEdit, errorMessage }) {
   const currentUser = useContext(CurrentUserContext)
   const [isEdit, setIsEdit] = useState(false)
-  const { values, handleChange, isValid, errors, setValues } =
+  const { values, handleChange, isValid, errors, setValues, setIsValid } =
     useFormAndValidation()
 
   useEffect(() => {
     setValues({ name: currentUser.name, email: currentUser.email })
   }, [currentUser])
+
+  useEffect(() => {
+    if (values.name === currentUser.name || values.email === currentUser.emai) {
+      setIsValid(false)
+    }
+  }, [values])
 
   function handleEdit(e) {
     e.preventDefault()
