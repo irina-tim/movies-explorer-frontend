@@ -1,35 +1,19 @@
 import './SearchForm.css'
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox'
-import { useEffect } from 'react'
-import { useLocalStorage } from '../../../hooks/useLocalStorage'
-import { useLocation } from 'react-router-dom'
 
-function SearchForm({ findMovies, handleSearchError }) {
-  const [inputValue, setInputValue] = useLocalStorage('searchString', '')
-  const [isShort, setIsShort] = useLocalStorage('shortMoviesOnly', false)
-  const { pathname } = useLocation()
-
-  useEffect(() => {
-    if (inputValue) findMovies(inputValue, isShort)
-  }, [])
-
-  function handleSearchButtonClick(evt) {
-    evt.preventDefault()
-    if (inputValue === '' && pathname === '/movies') {
-      handleSearchError('Нужно ввести ключевое слово')
-    } else {
-      handleSearchError('')
-      findMovies(inputValue, isShort)
-    }
-  }
-  function filterCheckboxClick(value) {
-    setIsShort(value)
-  }
+function SearchForm({
+  handleSearchButtonClick,
+  handleOnChange,
+  inputValue,
+  filterCheckboxClick,
+  isShort,
+}) {
   function handleEnterPress(e) {
     if (e.key === 'Enter') {
       handleSearchButtonClick(e)
     }
   }
+
   return (
     <section className="search-form">
       <div className="search-form__group">
@@ -37,9 +21,7 @@ function SearchForm({ findMovies, handleSearchError }) {
           <input
             className="search-form__input"
             placeholder="Фильм"
-            onChange={(e) => {
-              setInputValue(e.target.value)
-            }}
+            onChange={handleOnChange}
             required
             onKeyDown={handleEnterPress}
             value={inputValue}

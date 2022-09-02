@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useDebugValue } from 'react'
 
 import './Movies.css'
-import SearchForm from './SearchForm/SearchForm'
 import Preloader from './Preloader/Preloader'
 import MoviesCardList from './MoviesCardList/MoviesCardList'
 import LoadMore from './LoadMore/LoadMore'
 import { calcCardsAmount } from '../../utils/utils'
 import { INIT_COLUMNS_TO_ROWS, COLUMNS_TO_ROWS } from '../../utils/constants'
+import SearchMoviesForm from './SearchMoviesForm/SearchMoviesForm'
 
 const useLoadMore = () => {
   const [grid, setGrid] = useState(null)
@@ -61,7 +61,7 @@ function Movies(props) {
 
   return (
     <main className="content">
-      <SearchForm
+      <SearchMoviesForm
         findMovies={props.findMovies}
         handleSearchError={handleSearchError}
       />

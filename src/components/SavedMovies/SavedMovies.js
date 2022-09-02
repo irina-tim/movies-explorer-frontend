@@ -1,5 +1,5 @@
 import './SavedMovies.css'
-import SearchForm from '../Movies/SearchForm/SearchForm'
+import SearchSavedMoviesForm from '../Movies/SearchSavedMoviesForm/SearchSavedMoviesForm'
 import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList'
 
 function SavedMovies(props) {
@@ -8,7 +8,7 @@ function SavedMovies(props) {
   }
   return (
     <main className="content">
-      <SearchForm
+      <SearchSavedMoviesForm
         findMovies={props.findMovies}
         handleSearchError={handleSearchError}
       />

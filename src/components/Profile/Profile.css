@@ -75,7 +75,7 @@
   opacity: 1;
 }
 
-.profile__error-from-api {
+.profile__status {
   margin: 0;
   font: 400 10px/12px 'Inter', Arial, sans-serif;
   color: #ee3465;
@@ -83,6 +83,9 @@
   bottom: 120px;
   width: 100%;
   text-align: center;
+}
+
+.profile__status {
 }
 
 @media screen and (max-width: 800px) {

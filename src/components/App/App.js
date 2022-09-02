@@ -29,7 +29,7 @@ function App() {
   const navigate = useNavigate()
   const [loggedIn, setLoggedIn] = useState(undefined)
   const [errorMessage, setErrorMessage] = useState('')
-  const [profileErrorMessage, setProfileErrorMessage] = useState('')
+  const [profileStatusMessage, setProfileStatusMessage] = useState('')
   const [currentUser, setCurrentUser] = useState({})
   const [savedMovies, setSavedMovies] = useState([])
   const [filteredSavedMovies, setFilteredSavedMovies] = useState([])
@@ -45,15 +45,12 @@ function App() {
   useEffect(() => {
     let { searchPhrase, isShort } = savedMoviesFilter
     searchPhrase = searchPhrase.trim()
-    const filtered =
-      searchPhrase === ''
-        ? savedMovies
-        : savedMovies.filter((movie) => {
-            return (
-              movie.nameRU.toLowerCase().includes(searchPhrase.toLowerCase()) &&
-              (isShort ? isShortMovie(movie.duration) : true)
-            )
-          })
+    const filtered = savedMovies.filter((movie) => {
+      return (
+        movie.nameRU.toLowerCase().includes(searchPhrase.toLowerCase()) &&
+        (isShort ? isShortMovie(movie.duration) : true)
+      )
+    })
     setFilteredSavedMovies(filtered)
   }, [savedMovies, savedMoviesFilter])
 
@@ -139,7 +136,7 @@ function App() {
     return mainApi
       .updateProfile(name, email)
       .then((res) => {
-        setProfileErrorMessage('')
+        setProfileStatusMessage('Профиль успешно обновлён')
         if (res) {
           const userData = {
             id: res.data._id,
@@ -151,9 +148,9 @@ function App() {
       })
       .catch((err) => {
         if (err.status === 409) {
-          setProfileErrorMessage('Пользователь с таким email уже существует.')
+          setProfileStatusMessage('Пользователь с таким email уже существует.')
         } else {
-          setProfileErrorMessage('При обновлении профиля произошла ошибка.')
+          setProfileStatusMessage('При обновлении профиля произошла ошибка.')
         }
 
         throw err
@@ -395,7 +392,7 @@ function App() {
                 component={Profile}
                 handleSignOut={handleSignOut}
                 handleProfileEdit={updateProfile}
-                errorMessage={profileErrorMessage}
+                statusMessage={profileStatusMessage}
               />
             </>
           }

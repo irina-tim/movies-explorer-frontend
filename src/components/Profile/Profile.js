@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import { useFormAndValidation } from '../../hooks/useFormAndValidation'
 
-function Profile({ handleSignOut, handleProfileEdit, errorMessage }) {
+function Profile({ handleSignOut, handleProfileEdit, statusMessage }) {
   const currentUser = useContext(CurrentUserContext)
   const [isEdit, setIsEdit] = useState(false)
   const { values, handleChange, isValid, errors, setValues, setIsValid } =
@@ -14,7 +14,10 @@ function Profile({ handleSignOut, handleProfileEdit, errorMessage }) {
   }, [currentUser])
 
   useEffect(() => {
-    if (values.name === currentUser.name || values.email === currentUser.emai) {
+    if (
+      values.name === currentUser.name &&
+      values.email === currentUser.email
+    ) {
       setIsValid(false)
     }
   }, [values])
@@ -91,7 +94,7 @@ function Profile({ handleSignOut, handleProfileEdit, errorMessage }) {
             </button>
           </div>
         </form>
-        <p className="profile__error-from-api">{errorMessage}</p>
+        <p className="profile__status">{statusMessage}</p>
       </div>
     </section>
   )

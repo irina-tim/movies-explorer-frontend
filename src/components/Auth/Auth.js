@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+
+import { validateEmail } from '../../utils/utils'
 import './Auth.css'
 
 function Auth(props) {
@@ -13,7 +15,7 @@ function Auth(props) {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
-  const checks = ['typeMismatch', 'tooShort', 'valueMissing']
+  const checks = ['typeMismatch', 'tooShort', 'valueMissing', 'customError']
   const [isNameValid, setIsNameValid] = useState(false)
   const [isEmailValid, setIsEmailValid] = useState(false)
   const [isPasswordValid, setIsPasswordValid] = useState(false)
@@ -49,6 +51,13 @@ function Auth(props) {
       ...prev,
       [name]: value,
     }))
+    if (e.target.name === 'email') {
+      if (!validateEmail(value)) {
+        e.target.setCustomValidity('invalid email')
+      } else {
+        e.target.setCustomValidity('')
+      }
+    }
     checkValidity(e)
     if (e.target.name === 'email') setEmail(e.target.value)
     if (e.target.name === 'name') setName(e.target.value)
